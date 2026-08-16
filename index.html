@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UGC-NET Score Checker</title>
+<meta name="description" content="UGC-NET Digialm response-sheet PDF score calculator">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+  <header class="hero">
+    <div class="badge">UGC-NET</div>
+    <h1>Score Checker</h1>
+    <p>Upload your Digialm response-sheet PDF. The answer key is already built in.</p>
+  </header>
+
+  <section class="card upload-card">
+    <h2>Upload Response Sheet</h2>
+    <label class="dropzone" id="dropzone">
+      <input id="pdfInput" type="file" accept=".pdf,application/pdf">
+      <span class="upload-icon">↑</span>
+      <strong>Choose your Digialm PDF</strong>
+      <small>or drag & drop it here</small>
+    </label>
+    <div id="fileName" class="file-name"></div>
+
+    <div class="settings">
+      <label>OCR quality
+        <select id="scale">
+          <option value="1.3">Fast — 1.3×</option>
+          <option value="1.6" selected>Recommended — 1.6×</option>
+          <option value="2">High — 2×</option>
+        </select>
+      </label>
+      <label>Start page
+        <input id="startPage" type="number" min="1" value="1">
+      </label>
+      <label>End page
+        <input id="endPage" type="number" min="1" placeholder="All">
+      </label>
+      <button id="calculate" class="primary">Calculate Score</button>
+    </div>
+
+    <div id="progressWrap" class="hidden">
+      <div class="progress"><div id="progressBar"></div></div>
+      <div id="progressText"></div>
+    </div>
+    <div id="status" class="status hidden"></div>
+  </section>
+
+  <section id="summary" class="hidden">
+    <div class="stats-grid">
+      <div class="stat"><span>Correct</span><b id="correct">0</b></div>
+      <div class="stat"><span>Wrong</span><b id="wrong">0</b></div>
+      <div class="stat"><span>Unanswered</span><b id="unanswered">0</b></div>
+      <div class="stat dark"><span>Total Score</span><b id="score">0 / 300</b></div>
+    </div>
+    <div id="sectionCards" class="section-grid"></div>
+  </section>
+
+  <section id="details" class="card hidden">
+    <div class="toolbar">
+      <div>
+        <h2>Question-wise Result</h2>
+        <p id="info"></p>
+      </div>
+      <div class="filters">
+        <select id="sectionFilter"><option value="all">All sections</option></select>
+        <select id="resultFilter">
+          <option value="all">All results</option>
+          <option value="correct">Correct</option>
+          <option value="wrong">Wrong</option>
+          <option value="unanswered">Unanswered</option>
+        </select>
+        <button id="download" class="secondary">Download CSV</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Q</th><th>Question ID</th><th>Section</th>
+            <th>Your Answer</th><th>Correct</th><th>Result</th><th>Marks</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>Runs entirely in your browser. The response PDF is not uploaded to a server.</p>
+    <p>Answer key: embedded for the 150-question UGC-NET paper supplied for this app.</p>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
